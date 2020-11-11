@@ -1,5 +1,6 @@
 import React from "react";
 import { Context } from "../store/appContext";
+import { StripeCheckoutButton } from "../component/stripe_button";
 import { CartItem } from "../component/cartItem";
 
 export class Cart extends React.Component {
@@ -22,8 +23,9 @@ export class Cart extends React.Component {
 									<CartItem key={ind} index={ind} item={cartItem} />
 								))}
 							</div>
-							<div className="d-flex  justify-content-end">
-								<h3>Sub Total: {actions.getTotal()}</h3>
+							<div className="d-block">
+								<h3>Sub Total: {Math.round(actions.getTotal() * 100) / 100}</h3>
+								<StripeCheckoutButton price={Math.round(actions.getTotal() * 100) / 100} />
 							</div>
 						</div>
 					</div>

@@ -76,23 +76,32 @@ export const Navbar = props => {
 								className={"dropdown-menu  " + (clickedUser ? "show" : "")}
 								aria-labelledby="dropdownMenuLink">
 								{store.loggedin ? (
-									<Link to="/home">
-										<span className="dropdown-item" onClick={() => actions.login(false)}>
-											Log Out
-										</span>
-									</Link>
+									<>
+										<Link to="/account">
+											<span className="dropdown-item" href="#">
+												Account
+											</span>
+										</Link>
+										<Link to="/home">
+											<span className="dropdown-item" onClick={() => actions.login(false)}>
+												Log Out
+											</span>
+										</Link>
+									</>
 								) : (
-									<Link to="/login">
-										<span className="dropdown-item" href="#">
-											Log In
-										</span>
-									</Link>
+									<>
+										<Link to="/login">
+											<span className="dropdown-item" href="#">
+												Log In
+											</span>
+										</Link>
+										<Link to="/register">
+											<span className="dropdown-item" href="#">
+												Sign Up
+											</span>
+										</Link>
+									</>
 								)}
-								<Link to="/register">
-									<span className="dropdown-item" href="#">
-										Sign Up
-									</span>
-								</Link>
 							</div>
 						</div>
 					</li>

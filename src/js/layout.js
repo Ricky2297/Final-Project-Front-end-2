@@ -18,7 +18,6 @@ import { Account } from "./views/account";
 import { UserDetails } from "./views/userDetails";
 import { UserOrders } from "./views/userOrders";
 import { UserTransactions } from "./views/userTransactions";
-import { ReactCreditCards } from "./views/ReactCreditCards";
 
 //create your first component
 const Layout = () => {
@@ -32,7 +31,6 @@ const Layout = () => {
 				<ScrollToTop>
 					<Navbar />
 					<Switch>
-						<Route path="/reactcreditcards" component={ReactCreditCards} />
 						<Route path="/usertransaction" component={UserTransactions} />
 						<Route path="/userorders" component={UserOrders} />
 						<Route path="/userdetails" component={UserDetails} />

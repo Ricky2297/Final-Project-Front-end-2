@@ -1,24 +1,23 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			user: {
+				id: 2233,
+				f_name: "Ricky",
+				l_name: "Garcia",
+				email: "ricky@gmail.com",
+				phone: "3056785423",
+				password: "123"
+			},
 			loggedin: false,
 			search: "",
 			favorites: [],
-			cart: [],
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			cart: []
 		},
 		actions: {
+			resetCart: () => {
+				setStore({ cart: [] });
+			},
 			deleteFromCart: e => {
 				let { cart } = getStore();
 				setStore({ cart: cart.filter((item, ind) => ind != e) });

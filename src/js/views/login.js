@@ -25,7 +25,7 @@ export const Login = props => {
 										<label htmlFor="password">
 											<strong>Password</strong>
 										</label>
-										<input type="text" className="form-control" id="password" />
+										<input type="password" className="form-control" id="password" />
 									</div>
 								</div>
 							</div>
