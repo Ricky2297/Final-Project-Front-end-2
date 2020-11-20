@@ -92,7 +92,7 @@ export const UserDetails = props => {
 							/>
 						</div>
 						<div className="text-center">
-							<button className="btn btn-success">SAVE</button>
+							<button className="btn btn-primary">SAVE</button>
 						</div>
 
 						<div className=" form-row d-flex justify-content-between">

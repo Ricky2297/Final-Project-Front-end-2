@@ -1,16 +1,40 @@
 #navbar{
-    // background-image: url("https://i.pinimg.com/originals/e8/1f/4a/e81f4adbeffe2d927e34e8f1fb882510.jpg");
-    // background-image: url("https://i.pinimg.com/originals/11/8e/95/118e950566483a03cdb816326b74eec7.jpg");
-}
-body{
-    // background-image: url("https://i.pinimg.com/originals/e8/1f/4a/e81f4adbeffe2d927e34e8f1fb882510.jpg");
-    // background-image: url("https://i.pinimg.com/originals/11/8e/95/118e950566483a03cdb816326b74eec7.jpg");
-}
-img{
-    height: 250px;
-    width: 250px;
+ background: white;
+
 }
 
+body{
+    background: white;
+    font-family: 'Texturina', serif;
+}
+
+.jumbotron{
+     background-image: url("https://ccie.ucf.edu/wp-content/uploads/sites/12/2018/06/bannerSocialScienceEducation-1600x400.jpg");
+    //  background-image: url("https://www.binaryalembic.com/wp-content/uploads/2013/12/Nature-444-photos-1600x400.jpg");
+    //  background-image: url("https://climatealliancemap.org/files/2016/02/great-map-of-the-world-in-high-resolution-wallpaper-HEADER-1600x400.jpg");
+        width: 1515px;
+    height: 400px;
+}
+
+.jumbotron button{
+     margin-top: 270px;
+     color: blue;
+      background: rgba(128, 128, 128, 0.363);
+}
+
+.jumbotron h1{
+     font-size: 3.5em;
+     color: white;
+     background: rgba(128, 128, 128, 0.363);
+     width: 1000px;
+     margin: auto;
+     padding-top: 40px;
+}
+
+#product{
+    box-shadow: 4px 3px 15px  lightgray;
+    
+}
 .dropdown-menu {
     border: 1px solid gray;
 }
@@ -22,6 +46,10 @@ img{
     height: 500px;
     width: 500px;
 }
+#section{
+    padding-top: 20px;
+   text-align: center;
+}
 #section div{
     height: 200px;
     width: 300px;
@@ -29,9 +57,10 @@ img{
     margin:10px;
 }
 
-#dropdowm{
- position: absolute;
+#dropdowm {
+    right: -80px !important;
 }
+
 #cartBody{
     width: 200px;
     height: auto;
@@ -40,4 +69,61 @@ img{
 #cardCart{
     width: 800px;
     height: 250px;
+}
+
+#likeFront{
+margin-left: 5px;
+margin-top: 8px;
+}
+
+#cartFront{
+   margin-left: 60px;
+   margin-top: 8px;
+}
+
+#freeShip{
+    background: black;
+}
+
+#freeLetters{
+    font-size: 25px;
+}
+
+#imageBg{
+    width: 1519px;
+    height: 500px;
+}
+
+.navbar-nav .btn {
+    height: 38px;
+    width: 70px;
+}
+
+.productImage {
+    height: auto;
+    width: 500px;
+}
+
+#visit3 {
+    margin-left: 25px;
+}
+
+#visit2 {
+    margin-left: 10px;
+}
+
+.product .card-body {
+    min-height: 250px;
+    max-height: 250px;
+}
+
+.product .card {
+    height: 550px;
+    width: 320px;
+}
+
+img {
+    min-height: 280px;
+    max-height: 280px;
+    width: 300px;
 }

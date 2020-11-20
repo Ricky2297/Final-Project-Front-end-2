@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+
 export class ProductDetails extends React.Component {
 	constructor(props) {
 		super(props);
@@ -19,32 +20,32 @@ export class ProductDetails extends React.Component {
 		return (
 			<Context.Consumer>
 				{({ actions, store }) => (
-					<div className="container">
+					<div className="container productDetails">
 						<div className="row">
 							<div className="col-6">
-								<img src={this.props.location.state.product.img} className="w-100" />
+								<img src={this.props.location.state.product.img} className="productImage" />
 							</div>
 							<div className="col-6">
 								<div className="text-center m-3">
 									<h2 className="text-dark">{this.props.location.state.product.name}</h2>
-									<p className="text-danger">{this.props.location.state.product.description}</p>
+									<p className="text-secondary">{this.props.location.state.product.description}</p>
 									<button
-										className="nav-item btn btn-outline-warning"
+										className="nav-item btn btn-outline-primary"
 										onClick={() => actions.addToCart(this.props.location.state.product)}>
 										<i className="fas fa-shopping-cart" />
 									</button>
 									<button
 										type="button"
 										id="like"
-										className="btn btn-outline-warning"
+										className="btn btn-outline-success mx-2"
 										onClick={() => actions.addFavorites(this.props.location.state.product.name)}>
 										{<i className="fas fa-heart" />}
 									</button>
 								</div>
 							</div>
 						</div>
-						<div className="row ml-1 mr-1 background border-top border-danger">
-							<div className="col-12 d-flex justify-content-between text-danger text-center">
+						<div className="row ml-1 mr-1 mt-4 background border-top border-secondary">
+							<div className="col-12 d-flex justify-content-between text-secondary text-center">
 								<div className=" p-2 m-3">
 									<h6>Name</h6>
 									<p>{this.props.location.state.product.name}</p>

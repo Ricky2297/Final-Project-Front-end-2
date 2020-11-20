@@ -12,27 +12,27 @@ export const Account = props => {
 				<div className="nav-item">
 					<p>My Details</p>
 
-					<button className="btn btn-primary" onClick={() => setShow("details")}>
+					<button id="visit1" className=" btn btn-primary" onClick={() => setShow("details")}>
 						Visit
 					</button>
 				</div>
 				<div className="nav-item">
 					<p>My Orders</p>
 
-					<button className="btn btn-primary" onClick={() => setShow("orders")}>
+					<button id="visit2" className="btn btn-primary" onClick={() => setShow("orders")}>
 						Visit
 					</button>
 				</div>
 				<div className="nav-item">
 					<p>My Transaction</p>
 
-					<button className="btn btn-primary" onClick={() => setShow("transactions")}>
+					<button id="visit3" className="btn btn-primary" onClick={() => setShow("transactions")}>
 						Visit
 					</button>
 				</div>
 			</div>
 
-			<div className="">
+			<div className="pt-0 mt-0">
 				{show == "details" ? (
 					<div className="" id="details">
 						<UserDetails />

@@ -29,6 +29,11 @@ const Layout = () => {
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
+					<div id="freeShip">
+						<h1 id="freeLetters" className=" py-2 d-flex justify-content-center text-light">
+							FREE SHIPPING ON ORDERS OVER $99*
+						</h1>
+					</div>
 					<Navbar />
 					<Switch>
 						<Route path="/usertransaction" component={UserTransactions} />

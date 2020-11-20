@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import PropTypes, { element } from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Context } from "../store/appContext";
-
 export const Navbar = props => {
 	const { store, actions } = useContext(Context);
 	const [showDropdown, setShowDropdown] = useState(false);
@@ -10,13 +9,47 @@ export const Navbar = props => {
 	const [clickedCart, setClickedCart] = useState(false);
 	const [clickedUser, setClickedUser] = useState(false);
 	const [search, setSearch] = useState("");
-
+	const signInRef = useRef();
+	const favRef = useRef();
+	const history = useHistory();
+	useEffect(
+		() => {
+			const handleDropUp = event => {
+				if (signInRef.current.contains(event.target)) {
+					return;
+				}
+				setShowDropdown(false);
+			};
+			if (showDropdown) {
+				document.addEventListener("mousedown", handleDropUp);
+			} else {
+				document.removeEventListener("mousedown", handleDropUp);
+			}
+			return () => document.removeEventListener("mousedown", handleDropUp);
+		},
+		[showDropdown]
+	);
+	useEffect(
+		() => {
+			const handleClickOutsideFav = event => {
+				if (favRef.current.contains(event.target)) {
+					return;
+				}
+				setClickedFavorites(false);
+			};
+			if (clickedFavorites) {
+				document.addEventListener("mousedown", handleClickOutsideFav);
+			} else {
+				document.removeEventListener("mousedown", handleClickOutsideFav);
+			}
+			return () => document.removeEventListener("mousedown", handleClickOutsideFav);
+		},
+		[clickedFavorites]
+	);
 	return (
 		<nav id="navbar" className="navbar navbar-expand-lg navbar-light  d-flex   ">
-			<Link to="/home">
-				<a className="navbar-brand" href="">
-					<i className="fab fa-aviato fa-7x" />
-				</a>
+			<Link to="/home" className="navbar-brand">
+				<i className="fab fa-aviato fa-7x" />
 			</Link>
 			<form className="form-inline my-2 my-lg-0">
 				<input
@@ -33,7 +66,7 @@ export const Navbar = props => {
 					value={search}
 				/>
 				<button
-					className="btn btn-outline-success my-2 my-sm-0 "
+					className="btn btn-outline-primary my-2 my-sm-0 "
 					onClick={e => {
 						if (search.length > 0) {
 							actions.updateSearch(search);
@@ -53,13 +86,18 @@ export const Navbar = props => {
 				aria-label="Toggle navigation">
 				<span className="navbar-toggler-icon" />
 			</button>
-
 			<div className="collapse navbar-collapse d-flex justify-content-end " id="navbarSupportedContent">
 				<ul className="navbar-nav mr-0">
-					<li>{store.loggedin ? <h5>Welcome back, Ricky!</h5> : <h5 className="pr-2">Please log in </h5>}</li>
+					<li>
+						{store.loggedin ? (
+							<h5>Welcome back, Ricky! &nbsp;</h5>
+						) : (
+							<h5 className="pr-5">Please log in! </h5>
+						)}
+					</li>
 					<li>
 						{/* Log in */}
-						<div className={"nav-item dropdown pr-3 " + (showDropdown ? "show" : "")}>
+						<div ref={signInRef} className={"nav-item dropdown pr-3 " + (showDropdown ? "show" : "")}>
 							<button
 								className="btn btn-outline-primary dropdown-toggle "
 								href="#"
@@ -67,50 +105,61 @@ export const Navbar = props => {
 								id="dropdownMenuLink"
 								data-toggle="dropdown"
 								aria-haspopup="true"
-								aria-expanded={clickedUser}
-								onClick={() => setClickedUser(!clickedUser)}>
+								aria-expanded={showDropdown}
+								onClick={() => setShowDropdown(!showDropdown)}>
 								<i className="fas fa-user" />
 							</button>
-
 							<div
-								className={"dropdown-menu  " + (clickedUser ? "show" : "")}
+								className={"dropdown-menu dropdown-menu-right  " + (showDropdown ? "show" : "")}
 								aria-labelledby="dropdownMenuLink">
 								{store.loggedin ? (
 									<>
-										<Link to="/account">
-											<span className="dropdown-item" href="#">
-												Account
-											</span>
-										</Link>
-										<Link to="/home">
-											<span className="dropdown-item" onClick={() => actions.login(false)}>
-												Log Out
-											</span>
-										</Link>
+										<span
+											onClick={() => {
+												setShowDropdown(!showDropdown);
+												history.push("/account");
+											}}
+											className="dropdown-item">
+											Account
+										</span>
+										<span
+											onClick={() => {
+												setShowDropdown(!showDropdown);
+												actions.login(false);
+												history.push("/home");
+											}}
+											className="dropdown-item">
+											Log Out
+										</span>
 									</>
 								) : (
 									<>
-										<Link to="/login">
-											<span className="dropdown-item" href="#">
-												Log In
-											</span>
-										</Link>
-										<Link to="/register">
-											<span className="dropdown-item" href="#">
-												Sign Up
-											</span>
-										</Link>
+										<span
+											onClick={() => {
+												setShowDropdown(!showDropdown);
+												history.push("/login");
+											}}
+											className="dropdown-item">
+											Log In
+										</span>
+										<span
+											onClick={() => {
+												setShowDropdown(!showDropdown);
+												history.push("/register");
+											}}
+											className="dropdown-item">
+											Sign Up
+										</span>
 									</>
 								)}
 							</div>
 						</div>
 					</li>
-
 					{/* Boton Favorito 1 */}
 					<li className="pr-3">
-						<div className={"nav-item dropdown " + (showDropdown ? "show" : "")}>
+						<div ref={favRef} className={"nav-item dropdown " + (clickedFavorites ? "show" : "")}>
 							<button
-								className="faves btn btn-outline-danger nav-link dropdown-toggle"
+								className="faves btn btn-outline-success nav-link dropdown-toggle"
 								href="#"
 								id="navbarDropdown"
 								role="button"
@@ -125,24 +174,37 @@ export const Navbar = props => {
 								id="dropdowm"
 								className={
 									store.favorites.length > 0
-										? "dropdown-menu " + (clickedFavorites ? "show" : "")
+										? "dropdown-menu dropdown-menu-right " + (clickedFavorites ? "show" : "")
 										: "d-none"
 								}
 								aria-labelledby="navbarDropdown">
-								{store.favorites.length > 0
-									? store.favorites.map((elm, index) => (
-											<li
-												key={index}
-												className="dropdown-item d-flex align-items-center justify-content-between text-danger">
-												<Link to={`/details/${index + 1}`}>{elm.name}</Link>
-												&nbsp;&nbsp;
-												<i
-													className="fas fa-backspace"
-													onClick={() => actions.deleteFromFavorites(elm)}
-												/>
-											</li>
-									  ))
-									: null}
+								<ul className="pl-0">
+									{store.favorites.length > 0
+										? store.favorites.map((elm, index) => (
+												<li
+													key={index}
+													className="dropdown-item d-flex align-items-center justify-content-between text-danger">
+													<Link
+														to={{
+															pathname: `/details/${index + 1}`,
+															state: {
+																product: elm
+															}
+														}}>
+														{elm.name}
+														&nbsp; ${elm.price}
+													</Link>
+													&nbsp;&nbsp;
+													<i
+														className="fas fa-backspace"
+														onClick={() => {
+															actions.deleteFromFavorites(elm);
+														}}
+													/>
+												</li>
+										  ))
+										: null}
+								</ul>
 							</div>
 						</div>
 					</li>
@@ -150,7 +212,7 @@ export const Navbar = props => {
 					<li className="pr-3">
 						<Link to="/cart">
 							<button
-								className="faves btn btn-outline-warning nav-link dropdown-toggle"
+								className="faves btn btn-outline-primary nav-link dropdown-toggle"
 								href="#"
 								id="navbarDropdown"
 								role="button"
@@ -171,5 +233,7 @@ export const Navbar = props => {
 };
 Navbar.propTypes = {
 	location: PropTypes.object,
-	history: PropTypes.object
+	history: PropTypes.object,
+	index: PropTypes.number,
+	product: PropTypes.object
 };
