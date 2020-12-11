@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			// url: "https://3000-cf1d3bb8-7492-46d7-a42b-f1b9b7a01840.ws-us03.gitpod.io",
 			url: "https://3000-cf1d3bb8-7492-46d7-a42b-f1b9b7a01840.ws-us03.gitpod.io",
 			user: {
 				id: 2233,
@@ -105,8 +106,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Cart//
 			addToCart: item => {
 				let tempStore = getStore();
-				tempStore.cart.push(item);
-				setStore({ tempStore });
+				//
+				let store = getStore();
+				fetch(store.url + "/cart_product", {
+					method: "POST", // or 'POST'
+					body: JSON.stringify(item), // data can be `string` or {object}!
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => res.json())
+					.then(response => {
+						console.log("Success:", response);
+
+						let tempStore = getStore();
+						tempStore.cart.push(response);
+
+						setStore({ tempStore });
+					})
+					.catch(error => console.error("Error:", error));
+
+				//
+				// tempStore.cart.push(item);
+				// setStore({ tempStore });
 			},
 			deleteFromCart: e => {
 				let { cart } = getStore();
