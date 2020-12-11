@@ -18,22 +18,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			transactions: []
 		},
 		actions: {
-			resetCart: () => {
-				setStore({ cart: [] });
-			},
-			deleteFromCart: e => {
-				let { cart } = getStore();
-				setStore({ cart: cart.filter((item, ind) => ind != e) });
-			},
-			getTotal: () => {
-				let { cart } = getStore();
-				var total = 0;
-				for (let x of cart) {
-					total += x.price;
-				}
-				return total;
-			},
-
 			login: event => {
 				setStore({ loggedin: event });
 			},
@@ -123,6 +107,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let tempStore = getStore();
 				tempStore.cart.push(item);
 				setStore({ tempStore });
+			},
+			deleteFromCart: e => {
+				let { cart } = getStore();
+				setStore({ cart: cart.filter((item, ind) => ind != e) });
+			},
+			resetCart: () => {
+				setStore({ cart: [] });
+			},
+			getTotal: () => {
+				let { cart } = getStore();
+				var total = 0;
+				for (let x of cart) {
+					total += x.price;
+				}
+				return total;
 			}
 		}
 	};
