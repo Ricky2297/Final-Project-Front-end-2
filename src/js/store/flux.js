@@ -106,7 +106,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Cart//
 			addToCart: item => {
 				let tempStore = getStore();
-				//
+				///
 				let store = getStore();
 				fetch(store.url + "/cart_product", {
 					method: "POST", // or 'POST'
