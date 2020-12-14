@@ -130,6 +130,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// tempStore.cart.push(item);
 				// setStore({ tempStore });
 			},
+
+			getCart: async () => {
+				let store = getStore();
+				let response = await fetch(store.url + "/cart_product");
+				if (response.ok) {
+					let cart = await response.json();
+					setStore({ cart });
+				} else {
+					setStore({ cart: [] });
+				}
+			},
+
 			deleteFromCart: e => {
 				let { cart } = getStore();
 				setStore({ cart: cart.filter((item, ind) => ind != e) });
