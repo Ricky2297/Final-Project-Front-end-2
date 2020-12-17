@@ -73,16 +73,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.error("Error:", error));
 			},
 
-			// getProduct: async () => {
-			// 	let store = getStore();
-			// 	let response = await fetch(store.url + "/favorites");
-			// 	if (response.ok) {
-			// 		let products = await response.json();
-			// 		setStore({ products });
-			// 	} else {
-			// 		setStore({ products: [] });
-			// 	}
-			// },
+			getProduct: async () => {
+				let store = getStore();
+				let response = await fetch(store.url + "/product");
+				if (response.ok) {
+					let products = await response.json();
+					setStore({ products });
+				} else {
+					setStore({ products: [] });
+				}
+			},
 
 			getFavorites: async () => {
 				let store = getStore();
@@ -97,6 +97,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			deleteFromFavorites: favorite => {
 				let store = getStore();
+
 				fetch(store.url + "/favorites/" + favorite.id, {
 					method: "DELETE", // or 'POST'
 
@@ -157,10 +158,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			deleteFromCart: cart => {
+			deleteFromCart: e => {
 				let store = getStore();
-				// console.log(cart, "Hola Mundo");
-				fetch(store.url + "/cart_product/" + cart.id, {
+				console.log(e, "Hola Mundo");
+				fetch(store.url + "/cart_product/" + e.id, {
 					method: "DELETE",
 
 					headers: {

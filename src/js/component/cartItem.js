@@ -28,7 +28,7 @@ export const CartItem = props => {
 							<h6>ID: 123456</h6>
 
 							<button
-								onClick={() => actions.deleteFromCart(props.index)}
+								onClick={() => actions.deleteFromCart(props.item)}
 								type="button"
 								className="btn btn-secondary ">
 								Remove
@@ -43,5 +43,6 @@ export const CartItem = props => {
 
 CartItem.propTypes = {
 	item: PropTypes.object,
+
 	index: PropTypes.number
 };
