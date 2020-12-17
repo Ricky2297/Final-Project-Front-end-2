@@ -1,3 +1,5 @@
+import { Product } from "../component/product";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -16,7 +18,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			favorites: [],
 			cart: [],
 			orders: [],
-			transactions: []
+			transactions: [],
+			products: []
 		},
 		actions: {
 			login: event => {
@@ -69,6 +72,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.catch(error => console.error("Error:", error));
 			},
+
+			// getProduct: async () => {
+			// 	let store = getStore();
+			// 	let response = await fetch(store.url + "/favorites");
+			// 	if (response.ok) {
+			// 		let products = await response.json();
+			// 		setStore({ products });
+			// 	} else {
+			// 		setStore({ products: [] });
+			// 	}
+			// },
+
 			getFavorites: async () => {
 				let store = getStore();
 				let response = await fetch(store.url + "/favorites");
@@ -142,9 +157,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			deleteFromCart: e => {
-				let { cart } = getStore();
-				setStore({ cart: cart.filter((item, ind) => ind != e) });
+			deleteFromCart: cart => {
+				let store = getStore();
+				// console.log(cart, "Hola Mundo");
+				fetch(store.url + "/cart_product/" + cart.id, {
+					method: "DELETE",
+
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => res.json())
+					.then(response => {
+						console.log("Success:", response);
+
+						setStore({ cart: response });
+					})
+					.catch(error => console.error("Error:", error));
+
+				//
+				// let { cart } = getStore();
+				// setStore({ cart: cart.filter((item, ind) => ind != e) });
 			},
 			resetCart: () => {
 				setStore({ cart: [] });

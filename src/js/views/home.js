@@ -6,6 +6,7 @@ import { Product } from "../component/product";
 import { Context } from "../store/appContext";
 
 export class Home extends React.Component {
+	// static contextType = Context ---- esta linea declara que el componente usa el contexto Context
 	static contextType = Context;
 	constructor(props) {
 		super(props);
@@ -320,6 +321,7 @@ export class Home extends React.Component {
 					</Link>
 				</div>
 				<div>
+					{/* Cambiar linea 324 por this.context.products.map... */}
 					{this.state.products.map((product, index) => {
 						if (
 							(search != "" &&
