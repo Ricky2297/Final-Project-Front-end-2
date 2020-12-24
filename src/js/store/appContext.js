@@ -24,7 +24,7 @@ const injectContext = PassedComponent => {
 		useEffect(() => {
 			state.actions.getFavorites();
 			state.actions.getCart();
-			state.actions.getProduct();
+			state.actions.getProducts();
 			/**
 			 * EDIT THIS!
 			 * This function is the equivalent to "window.onLoad", it only runs once on the entire application lifetime

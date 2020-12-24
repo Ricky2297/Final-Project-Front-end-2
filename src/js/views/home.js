@@ -247,94 +247,109 @@ export class Home extends React.Component {
 			]
 		};
 	}
+	compare = (a, b) => {
+		// Use toUpperCase() to ignore character casing
+		const continentA = a.continent.toUpperCase();
+		const continentB = b.continent.toUpperCase();
+		let comparison = 0;
+		if (continentA > continentB) {
+			comparison = 1;
+		} else if (continentA < continentB) {
+			comparison = -1;
+		}
+		return comparison;
+	};
 
 	render() {
 		const search = this.context.store.search;
 		return (
-			<div className="text-center  m-0">
-				<div className="jumbotron d-flex align-items-center justify-content-center w-100 p-0 bg-light">
-					<div className="lead text-white h-50">
-						<h1 className="quirky h-100">Quirky Gifts for Quirky People</h1>
-					</div>
-				</div>
+			<Context.Consumer>
+				{({ actions, store }) => (
+					<div className="text-center  m-0">
+						<div className="jumbotron d-flex align-items-center justify-content-center w-100 p-0 bg-light">
+							<div className="lead text-white h-50">
+								<h1 className="quirky h-100">Quirky Gifts for Quirky People</h1>
+							</div>
+						</div>
 
-				<div>
-					<Link
-						to={{
-							pathname: `/continent`,
-							state: {
-								products: this.state.products,
-								continent: "AFRICA"
-							}
-						}}>
-						<span className="px-3 btn btn-outline-primary mx-2 mt-2">AFRICA</span>
-					</Link>
-					<Link
-						to={{
-							pathname: `/continent`,
-							state: {
-								products: this.state.products,
-								continent: "EUROPE"
-							}
-						}}>
-						<span className="px-3 btn btn-outline-primary mx-2 mt-2">EUROPE</span>
-					</Link>
-					<Link
-						to={{
-							pathname: `/continent`,
-							state: {
-								products: this.state.products,
-								continent: "ASIA"
-							}
-						}}>
-						<span className="px-3 btn btn-outline-primary mx-2 mt-2">ASIA</span>
-					</Link>
-					<Link
-						to={{
-							pathname: `/continent`,
-							state: {
-								products: this.state.products,
-								continent: "AUSTRALIA"
-							}
-						}}>
-						<span className="px-3 btn btn-outline-primary mx-2 mt-2">AUSTRALIA</span>
-					</Link>
-					<Link
-						to={{
-							pathname: `/continent`,
-							state: {
-								products: this.state.products,
-								continent: "NORTH AMERICA"
-							}
-						}}>
-						<span className="px-3 btn btn-outline-primary mx-2 mt-2">NORTH AMERICA</span>
-					</Link>
-					<Link
-						to={{
-							pathname: `/continent`,
-							state: {
-								products: this.state.products,
-								continent: "SOUTH AMERICA"
-							}
-						}}>
-						<span className="px-3 btn btn-outline-primary mx-2 mt-2">SOUTH AMERICA</span>
-					</Link>
-				</div>
-				<div>
-					{/* Cambiar linea 324 por this.context.products.map... */}
-					{this.state.products.map((product, index) => {
-						if (
-							(search != "" &&
-								(product.name.toLowerCase().includes(search.toLowerCase()) ||
-									product.continent.toLowerCase().includes(search.toLowerCase()) ||
-									product.country.toLowerCase().includes(search.toLowerCase()))) ||
-							search == ""
-						) {
-							return <Product key={index} product={product} />;
-						}
-					})}
-				</div>
-			</div>
+						<div>
+							<Link
+								to={{
+									pathname: `/continent`,
+									state: {
+										products: this.state.products,
+										continent: "AFRICA"
+									}
+								}}>
+								<span className="px-3 btn btn-outline-primary mx-2 mt-2">AFRICA</span>
+							</Link>
+							<Link
+								to={{
+									pathname: `/continent`,
+									state: {
+										products: this.state.products,
+										continent: "EUROPE"
+									}
+								}}>
+								<span className="px-3 btn btn-outline-primary mx-2 mt-2">EUROPE</span>
+							</Link>
+							<Link
+								to={{
+									pathname: `/continent`,
+									state: {
+										products: this.state.products,
+										continent: "ASIA"
+									}
+								}}>
+								<span className="px-3 btn btn-outline-primary mx-2 mt-2">ASIA</span>
+							</Link>
+							<Link
+								to={{
+									pathname: `/continent`,
+									state: {
+										products: this.state.products,
+										continent: "AUSTRALIA"
+									}
+								}}>
+								<span className="px-3 btn btn-outline-primary mx-2 mt-2">AUSTRALIA</span>
+							</Link>
+							<Link
+								to={{
+									pathname: `/continent`,
+									state: {
+										products: this.state.products,
+										continent: "NORTH AMERICA"
+									}
+								}}>
+								<span className="px-3 btn btn-outline-primary mx-2 mt-2">NORTH AMERICA</span>
+							</Link>
+							<Link
+								to={{
+									pathname: `/continent`,
+									state: {
+										products: this.state.products,
+										continent: "SOUTH AMERICA"
+									}
+								}}>
+								<span className="px-3 btn btn-outline-primary mx-2 mt-2">SOUTH AMERICA</span>
+							</Link>
+						</div>
+						<div>
+							{store.products.sort(this.compare).map((product, index) => {
+								if (
+									(search != "" &&
+										(product.name.toLowerCase().includes(search.toLowerCase()) ||
+											product.continent.toLowerCase().includes(search.toLowerCase()) ||
+											product.country.toLowerCase().includes(search.toLowerCase()))) ||
+									search == ""
+								) {
+									return <Product key={index} product={product} />;
+								}
+							})}
+						</div>
+					</div>
+				)}
+			</Context.Consumer>
 		);
 	}
 }

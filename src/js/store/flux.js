@@ -52,6 +52,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
+
+			// Aqui va lo de Registrar un usuario
+			newUser: param1 => {
+				console.log(param1);
+				let store = getStore();
+				fetch(store.url + "/new-user", {
+					method: "POST", // or 'POST'
+					body: JSON.stringify({
+						first_name: param1.firstName,
+						last_name: param1.lastName,
+						email: param1.email,
+						phone_number: param1.phoneNumber,
+						password: param1.password
+					}), // data can be `string` or {object}!
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+					.then(res => res.json())
+					.then(response => {
+						console.log("Success:", response);
+						setStore({
+							user: response
+						});
+					})
+					// sends error to user and to console log
+					.catch(error => {
+						setStore({ errors: error });
+						console.error("Error:", error);
+						return true;
+					});
+			},
+
 			addFavorites: item => {
 				let store = getStore();
 				fetch(store.url + "/favorites", {
@@ -73,7 +106,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.catch(error => console.error("Error:", error));
 			},
 
-			getProduct: async () => {
+			// Aqui es donde se muestran los productos
+
+			getProducts: async () => {
 				let store = getStore();
 				let response = await fetch(store.url + "/product");
 				if (response.ok) {
