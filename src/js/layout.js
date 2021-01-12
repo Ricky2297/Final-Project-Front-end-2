@@ -9,6 +9,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { PrivateRoute } from "./component/privateRoute";
 import { ContinentView } from "./views/continentView";
 import { ProductDetails } from "./views/productDetails";
 import { Register } from "./views/register";
@@ -39,7 +40,7 @@ const Layout = () => {
 						<Route path="/usertransaction" component={UserTransactions} />
 						<Route path="/userorders" component={UserOrders} />
 						<Route path="/userdetails" component={UserDetails} />
-						<Route path="/account" component={Account} />
+						<PrivateRoute path="/account" component={Account} />
 						<Route path="/details/:id" component={ProductDetails} />
 						<Route path="/register" component={Register} />
 						<Route path="/login" component={Login} />

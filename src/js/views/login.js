@@ -1,8 +1,19 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { useHistory } from "react-router-dom";
 export const Login = props => {
 	const { store, actions } = useContext(Context);
+	const [userDetails, setUserDetails] = useState({ email: "", password: "" });
+	let history = useHistory();
+	const login = async () => {
+		await actions.loggin(userDetails.email, userDetails.password);
+		setUserDetails({ email: "", password: "" });
+		if (store.loggedin) {
+			history.push("/account");
+		}
+	};
+
 	return (
 		<div className="container-fluid p-4">
 			<div className="card text-center">
@@ -19,13 +30,25 @@ export const Login = props => {
 										<label htmlFor="email">
 											<strong>Email</strong>
 										</label>
-										<input type="text" className="form-control" id="email" />
+										<input
+											value={userDetails.email}
+											onChange={e => setUserDetails({ ...userDetails, email: e.target.value })}
+											type="text"
+											className="form-control"
+											id="email"
+										/>
 									</div>
 									<div className="form-group col-md-6 text-left">
 										<label htmlFor="password">
 											<strong>Password</strong>
 										</label>
-										<input type="password" className="form-control" id="password" />
+										<input
+											value={userDetails.password}
+											onChange={e => setUserDetails({ ...userDetails, password: e.target.value })}
+											type="password"
+											className="form-control"
+											id="password"
+										/>
 									</div>
 								</div>
 							</div>
@@ -41,11 +64,14 @@ export const Login = props => {
 					</form>
 				</div>
 				<div className="card-footer text-muted d-flex justify-content-center">
-					<Link to="/account">
-						<button onClick={() => actions.login(true)} href="#" className="btn btn-primary">
-							Log in
-						</button>
-					</Link>
+					<button
+						onClick={() => {
+							login();
+						}}
+						href="#"
+						className="btn btn-primary">
+						Log in
+					</button>
 				</div>
 			</div>
 		</div>

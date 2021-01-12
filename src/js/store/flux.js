@@ -5,14 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			// url: "https://3000-cf1d3bb8-7492-46d7-a42b-f1b9b7a01840.ws-us03.gitpod.io",
 			url: "https://3000-cf1d3bb8-7492-46d7-a42b-f1b9b7a01840.ws-us03.gitpod.io",
-			user: {
-				id: 2233,
-				f_name: "Ricky",
-				l_name: "Garcia",
-				email: "rickysgb@gmail.com",
-				phone: "786-241-4331",
-				password: "123"
-			},
+			user: {},
 			loggedin: false,
 			search: "",
 			favorites: [],
@@ -56,14 +49,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 			// Aqui va lo de Registrar un usuario
 			newUser: param1 => {
 				console.log(param1);
+				console.log(param1.phonenumber);
 				let store = getStore();
 				fetch(store.url + "/new-user", {
 					method: "POST", // or 'POST'
 					body: JSON.stringify({
 						first_name: param1.firstName,
-						last_name: param1.lastName,
+						last_name: param1.lastname,
 						email: param1.email,
-						phone_number: param1.phoneNumber,
+						phone_number: param1.phonenumber,
 						password: param1.password
 					}), // data can be `string` or {object}!
 					headers: {
@@ -83,6 +77,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.error("Error:", error);
 						return true;
 					});
+			},
+
+			loggin: async (email, password) => {
+				let store = getStore();
+				let response = await fetch(store.url + "/new-user");
+				if (response.ok) {
+					let users = await response.json();
+					let user = users.filter(user => {
+						return user.email === email;
+					});
+					if (user.length == 1) {
+						if (user[0].password == password) {
+							setStore({ loggedin: true, user: user[0] });
+						} else {
+							alert("NO PUEDES ENTRAR!");
+						}
+					} else {
+						alert("NO PUEDES ENTRAR!");
+					}
+				}
 			},
 
 			addFavorites: item => {
